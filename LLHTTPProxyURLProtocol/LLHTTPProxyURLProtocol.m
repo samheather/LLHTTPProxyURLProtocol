@@ -23,7 +23,7 @@ NSString *const LLHTTPProxyURLProtocolProxyServerKey                = @"co.lazyl
 
 +(BOOL)canInitWithRequest:(NSURLRequest *)request {
     if (![request.URL.scheme hasPrefix:@"http"]) return NO;
-    return NO;
+    return YES;
 //     return ([[NSURLProtocol propertyForKey:LLHTTPProxyURLProtocolProxyServerKey inRequest:request] isKindOfClass:[NSURL class]]);
 }
 +(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request { return request; }
