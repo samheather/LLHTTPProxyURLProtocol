@@ -26,6 +26,9 @@ NSString *const LLHTTPProxyURLProtocolProxyServerKey                = @"co.lazyl
     BOOL flag = ([[NSURLProtocol propertyForKey:LLHTTPProxyURLProtocolProxyServerKey inRequest:request] isKindOfClass:[NSURL class]]);
     NSString *url = request.URL.absoluteString;
     NSLog(flag ? [@"Yes : " stringByAppendingString:url] : [@"No  : " stringByAppendingString:url] );
+    if (flag == NO) {
+        NSLog([@"Error - this URL won't be proxied" stringByAppendingString:url]);
+    }
     return ([[NSURLProtocol propertyForKey:LLHTTPProxyURLProtocolProxyServerKey inRequest:request] isKindOfClass:[NSURL class]]);
 }
 +(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request { return request; }
