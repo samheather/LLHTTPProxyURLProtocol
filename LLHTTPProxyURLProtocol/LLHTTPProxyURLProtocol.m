@@ -23,7 +23,8 @@ NSString *const LLHTTPProxyURLProtocolProxyServerKey                = @"co.lazyl
 
 +(BOOL)canInitWithRequest:(NSURLRequest *)request {
     if (![request.URL.scheme hasPrefix:@"http"]) return NO;
-    return ([[NSURLProtocol propertyForKey:LLHTTPProxyURLProtocolProxyServerKey inRequest:request] isKindOfClass:[NSURL class]]);
+    return YES;
+//     return ([[NSURLProtocol propertyForKey:LLHTTPProxyURLProtocolProxyServerKey inRequest:request] isKindOfClass:[NSURL class]]);
 }
 +(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request { return request; }
 
@@ -91,10 +92,10 @@ NSString *const LLHTTPProxyURLProtocolProxyServerKey                = @"co.lazyl
                               forKey:(NSString *)kCFStreamPropertySOCKSVersion];
 
             proxySettings = socksSettings;
-        } else if ([proxyURL.scheme hasPrefix:@"https"]) {
-            proxySettings = @{(NSString *)kCFStreamPropertyHTTPSProxyHost: proxyURL.host, (NSString *)kCFStreamPropertyHTTPSProxyPort: proxyURL.port};
+        } else if ([proxyURL.scheme hasPrefix:@"http"]) {
+            proxySettings = @{(NSString *)kCFStreamPropertyHTTPSProxyHost: proxyURL.host, (NSString *)kCFStreamPropertyHTTPSProxyPort: proxyURL.port, (NSString *)kCFStreamPropertyHTTPProxyHost: proxyURL.host, (NSString *)kCFStreamPropertyHTTPProxyPort: proxyURL.port};
         } else {
-            proxySettings = @{(NSString *)kCFStreamPropertyHTTPProxyHost: proxyURL.host, (NSString *)kCFStreamPropertyHTTPProxyPort: proxyURL.port};
+            NSLog(@"SAMSAM - ERROR");
         }
 
         if (proxySettings) CFReadStreamSetProperty(requestReadStream, kCFStreamPropertyHTTPProxy, (__bridge CFTypeRef)(proxySettings));
